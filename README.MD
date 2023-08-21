@@ -1,7 +1,7 @@
 ![Animei Bot](./thumb.jpg)
 
 # Animei Bot
-### Golang Bot to Search and Mangas and Animes
+🤖🎬 An intelligent bot for quick manga and anime searches, bringing entertainment at your fingertips.
 
 ## ❗ Requirements
 This project requires the [FFmpeg](https://www.ffmpeg.org/) installed.
