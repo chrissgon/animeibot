@@ -1,0 +1,158 @@
+name: flow
+
+steps:
+  init:
+    next:
+      default: intro
+
+  end:
+    action: End
+
+  error:
+    action: Text
+    parameters:
+      texts:
+        - 😕 Desculpe, não pude encontrar nada...
+
+  # general
+  intro:
+    action: Text
+    next:
+      default: commands
+    parameters:
+      texts:
+        - 👋🏻 Olá visitante
+        - ""
+        - 🤖 Encontre animes e mangas com o Animei Bot
+
+  commands:
+    action: Button
+    next:
+      Mangas: mangaIntro
+      Animes: animeIntro
+      default: nocommand
+    parameters:
+      texts:
+        - "Selecione o que deseja procurar 👇🏻"
+      buttons:
+        - Mangas
+        - Animes
+
+  nocommand:
+    action: Text
+    next:
+      default: commands
+    parameters:
+      texts:
+        - 😵 Desculpe, selecione uma das opções
+
+  stop:
+    action: Stop
+    next:
+      default: goodbye
+  
+  goodbye:
+    action: Text
+    parameters:
+      texts:
+        - 😉 Pesquisa finalizada
+    next:
+      default: end
+
+  # manga
+  mangaIntro:
+    action: Text
+    next:
+      default: mangaInput
+    parameters:
+      texts:
+        - 🤩 Certo, vamos procurar pelo seu manga!
+
+  mangaInput:
+    action: Input
+    next:
+      .+ [0-9]{1,}: manga
+      default: mangaInputError
+    parameters:
+      texts:
+        - 🤔 Qual o nome e capítulo?
+        - ""
+        - "👉🏻 Exemplo: Naruto 1"
+
+  mangaInputError:
+    action: Text
+    next:
+      default: mangaInput
+    parameters:
+      texts:
+        - 😕 Desculpe, não entendi o que quis dizer.
+
+  manga:
+    action: Manga
+    next:
+      \/stop: stop
+      default: waitManga
+    parameters:
+      texts:
+        - 🔎 Iniciando a procura...
+        - ""
+        - ❌ Caso deseje cancelar a pesquisa, digite /stop
+
+  waitManga:
+    action: Wait
+    next:
+      \/stop: stop
+      default: waitManga
+
+  # animes
+  animeAlert:
+    action: Text
+    next:
+      default: commands
+    parameters:
+      texts:
+        - 😢 Infelizmente a pesquisa por animes ainda não está disponível. Por favor, selecione outra opção
+
+  animeIntro:
+    action: Text
+    next:
+      default: animeInput
+    parameters:
+      texts:
+        - 🤩 Certo, vamos procurar pelo seu anime!
+
+  animeInput:
+    action: Input
+    next:
+      .+ [0-9]{1,}: anime
+      default: animeInputError
+    parameters:
+      texts:
+        - 🤔 Qual o nome e capítulo?
+        - ""
+        - "👉🏻 Exemplo: Naruto 1"
+
+  animeInputError:
+    action: Text
+    next:
+      default: animeInput
+    parameters:
+      texts:
+        - 😕 Desculpe, não entendi o que quis dizer.
+
+  anime:
+    action: Anime
+    next:
+      \/stop: stop
+      default: waitAnime
+    parameters:
+      texts:
+        - 🔎 Iniciando a procura...
+        - ""
+        - ❌ Caso deseje cancelar a pesquisa, digite /stop
+
+  waitAnime:
+    action: Wait
+    next:
+      \/stop: stop
+      default: waitAnime
